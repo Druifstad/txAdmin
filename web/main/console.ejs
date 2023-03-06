@@ -78,27 +78,30 @@
         <div class="row">
             <div class="col-xl-6 col-lg-12">
                 <form class="form-inline container-fluid text-center" id="frmConsole">
-                    <div class="mx-auto">
+                    <div style="width: 100%;">
                         <div class="form-group">
                             <input type="text" class="form-control console-input form-control-sm" id="cmdInput"
                                    placeholder="Press enter to send. Up/Down arrows to navigate commands."
+                                   style="width: 100%; max-width: 100%"
                                    autocomplete="off" autocorrect="off" autocapitalize="off"
                                    spellcheck="false" <%= disableCommand %>>
                         </div>
-                        <a href="fxserver/downloadLog" target="_blank" 
-                            class="btn btn-outline-light btn-sm mb-2 <%= (isWebInterface ? '' : 'disabled') %>">
-                            Download Log
-                        </a>
-                        <button type="button" id="clearConsole" class="btn btn-outline-light btn-sm mb-2">
-                            Clear Console
-                        </button>
-                        <button type="button" id="announcementBtn" class="btn btn-outline-warning btn-sm mb-2" <%= disableAnnouncement %>>
-                            Announcement
-                        </button>
-                        <button type="button" id="ctrl-restart" class="btn btn-outline-danger btn-sm mb-2" 
-                            onclick="txApiFxserverControl('restart')" <%= disableRestart %>>
-                                RESTART
-                        </button>
+                        <div class="mr-auto" style="display: flex">
+                            <a href="fxserver/downloadLog" target="_blank" 
+                                class="btn btn-outline-light btn-sm mb-2 <%= (isWebInterface ? '' : 'disabled') %>">
+                                Download Log
+                            </a>
+                            <button type="button" id="clearConsole" class="btn btn-outline-light btn-sm mb-2">
+                                Clear Console
+                            </button>
+                            <button type="button" id="announcementBtn" class="btn btn-outline-warning btn-sm mb-2" <%= disableAnnouncement %>>
+                                Announcement
+                            </button>
+                            <button type="button" id="ctrl-restart" class="btn btn-outline-danger btn-sm mb-2" 
+                                onclick="txApiFxserverControl('restart')" <%= disableRestart %>>
+                                    RESTART
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>

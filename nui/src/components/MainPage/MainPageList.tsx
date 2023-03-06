@@ -402,24 +402,6 @@ export const MainPageList: React.FC = () => {
             },
           },
           {
-            name: t("nui_menu.page_main.player_mode.godmode.title"),
-            label: t("nui_menu.page_main.player_mode.godmode.label"),
-            value: PlayerMode.GOD_MODE,
-            icon: <Security />,
-            onSelect: () => {
-              handlePlayermodeToggle(PlayerMode.GOD_MODE);
-            },
-          },
-          {
-            name: t("nui_menu.page_main.player_mode.superjump.title"),
-            label: t("nui_menu.page_main.player_mode.superjump.label"),
-            value: PlayerMode.SUPER_JUMP,
-            icon: <AirlineStops />,
-            onSelect: () => {
-              handlePlayermodeToggle(PlayerMode.SUPER_JUMP);
-            },
-          },
-          {
             name: t("nui_menu.page_main.player_mode.normal.title"),
             label: t("nui_menu.page_main.player_mode.normal.label"),
             value: PlayerMode.DEFAULT,
@@ -512,16 +494,6 @@ export const MainPageList: React.FC = () => {
               handleDeleteVehicle();
             },
           },
-          {
-            name: t("nui_menu.page_main.vehicle.boost.title"),
-            label: t("nui_menu.page_main.vehicle.boost.label"),
-            value: VehicleMode.BOOST,
-            icon: <RocketLaunch />,
-            onSelect: () => {
-              setVehicleMode(VehicleMode.BOOST);
-              handleBoostVehicle();
-            },
-          },
         ],
       },
 
@@ -577,11 +549,6 @@ export const MainPageList: React.FC = () => {
         icon: <Groups />,
         onSelect: handleTogglePlayerIds,
       },
-      // {
-      //   title: "Spawn Weapon",
-      //   icon: <Stream />,
-      //   onSelect: handleSpawnWeapon,
-      // },
     ],
     [playerMode, teleportMode, vehicleMode, healMode, serverCtx]
   );
@@ -613,17 +580,6 @@ export const MainPageList: React.FC = () => {
       <BoxIcon display="flex" justifyContent="center">
         <ExpandMore />
       </BoxIcon>
-      {/* <Typography
-        color="textSecondary"
-        style={{
-          fontWeight: 500,
-          marginTop: -20,
-          textAlign: "left",
-          fontSize: 12,
-        }}
-      >
-        v{serverCtx.txAdminVersion}
-      </Typography>  */}
     </Box>
   );
 };

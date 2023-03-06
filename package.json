@@ -11,6 +11,7 @@
     "prepare": "husky install",
     "dev:menu:browser": "vite dev nui/ --mode devNuiBrowser",
     "dev:menu:game": "vite build nui/ --watch --mode development",
+    "dev:menu": "vite build nui/ --watch --mode devNuiBrowser",
     "dev:main": "node scripts/main-builder.js dev",
     "typecheck": "npm run typecheck:menu && npm run typecheck:main",
     "typecheck:menu": "tsc -p nui/tsconfig.json --noEmit",

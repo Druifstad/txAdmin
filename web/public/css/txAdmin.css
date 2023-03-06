@@ -84,7 +84,7 @@ option:disabled {
     background-color: #fff;
 }
 .c-sidebar .c-sidebar-nav-link.c-active {
-    border-left: aquamarine solid 3px;
+    border-left: #744eaa solid 3px;
 }
 [data-notify="message"] pre{
 	white-space: normal;
@@ -332,7 +332,7 @@ mark {background-color: #ffeaa7;}
 .txSpinner,
 .txSpinner:before,
 .txSpinner:after {
-    background: #00c88f;
+    background: #744eaa;
     -webkit-animation: txSpinnerLoad 1s infinite ease-in-out;
     animation: txSpinnerLoad 1s infinite ease-in-out;
     width: 1em;
@@ -340,7 +340,7 @@ mark {background-color: #ffeaa7;}
 }
 
 .txSpinner {
-    color: #00c88f;
+    color: #744eaa;
     text-indent: -9999em;
     margin: 88px auto;
     position: relative;

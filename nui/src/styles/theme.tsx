@@ -6,10 +6,10 @@ export const MenuTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "rgba(0,197,140,0.87)",
+      main: "rgba(116, 78, 170, 0.87)",
     },
     success: {
-      main: "rgba(0,149,108,0.87)",
+      main: "rgba(0, 149, 108, 0.87)",
     },
     warning: {
       main: "rgb(255,189,22)",
