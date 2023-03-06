@@ -368,35 +368,6 @@ const DialogActionView: React.FC = () => {
           {t("nui_menu.player_modal.actions.interaction.options.toggle_freeze")}
         </Button>
       </Box>
-      <Typography className={classes.sectionTitle}>
-        {t("nui_menu.player_modal.actions.troll.title")}
-      </Typography>
-      <Box className={classes.actionGrid}>
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={handleDrunk}
-          disabled={!userHasPerm("players.troll", playerPerms)}
-        >
-          {t("nui_menu.player_modal.actions.troll.options.drunk")}
-        </Button>
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={handleSetOnFire}
-          disabled={!userHasPerm("players.troll", playerPerms)}
-        >
-          {t("nui_menu.player_modal.actions.troll.options.fire")}
-        </Button>
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={handleWildAttack}
-          disabled={!userHasPerm("players.troll", playerPerms)}
-        >
-          {t("nui_menu.player_modal.actions.troll.options.wild_attack")}
-        </Button>
-      </Box>
     </StyledDialogContent>
   );
 };
