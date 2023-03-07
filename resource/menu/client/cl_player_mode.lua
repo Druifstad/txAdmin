@@ -141,10 +141,6 @@ end)
 
 -- [[ Player mode changed cb event ]]
 RegisterNetEvent('txAdmin:menu:playerModeChanged', function(mode, ptfx)
-    if ptfx then 
-        createPlayerModePtfxLoop(PlayerPedId())
-    end
-
     if mode == 'godmode' then
         toggleFreecam(false)
         toggleGodMode(true)
