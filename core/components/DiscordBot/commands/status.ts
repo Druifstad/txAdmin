@@ -1,11 +1,10 @@
 const modulename = 'DiscordBot:cmd:status';
 import humanizeDuration from 'humanize-duration';
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder } from 'discord.js';
+import { ChannelType, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder } from 'discord.js';
 import logger from '@core/extras/console.js';
-import { txEnv } from '@core/globalData';
 import TxAdmin from '@core/txAdmin';
 import { cloneDeep } from 'lodash-es';
-import { embedder, ensurePermission, isValidButtonEmoji, isValidEmbedUrl, logDiscordAdminAction } from '../discordHelpers';
+import { embedder, ensurePermission, isValidEmbedUrl, logDiscordAdminAction } from '../discordHelpers';
 const { dir, log, logOk, logWarn, logError } = logger(modulename);
 
 //Humanizer options
@@ -17,23 +16,12 @@ const humanizer = humanizeDuration.humanizer({
     language: 'shortEn',
     languages: {
         shortEn: {
-            d: (c) => "day" + (c === 1 ? "" : "s"),
-            h: (c) => "hr" + (c === 1 ? "" : "s"),
-            m: (c) => "min" + (c === 1 ? "" : "s"),
+            d: () => "dagen",
+            h: () => "uur",
+            m: () => "minuten",
         },
     },
 });
-
-const isValidButtonConfig = (btn: any) => {
-    const btnType = typeof btn;
-    return (
-        btn !== null && btnType === 'object'
-        && typeof btn.label === 'string'
-        && typeof btn.url === 'string'
-        && (typeof btn.emoji === 'string' || btn.emoji === undefined)
-    );
-}
-
 
 export const generateStatusMessage = (
     txAdmin: TxAdmin,
@@ -63,10 +51,10 @@ export const generateStatusMessage = (
     const placeholders = {
         serverName: txAdmin.globalConfig.serverName,
         statusString: 'Unknown',
-        statusColor: '#4C3539',
+        statusColor: '#7744aa',
         serverCfxId,
         serverBrowserUrl: `https://servers.fivem.net/servers/detail/${serverCfxId}`,
-        serverJoinUrl: `https://cfx.re/join/${serverCfxId}`,
+        serverJoinUrl: `fivem://connect/druifstad.nl:30120`,
         serverMaxClients: txAdmin.persistentCache.get('fxsRuntime:maxClients') ?? 'unknown',
         serverClients: txAdmin.playerlistManager.onlineCount,
         nextScheduledRestart: 'unknown',
@@ -95,13 +83,13 @@ export const generateStatusMessage = (
     //Prepare status placeholders
     if (txAdmin.healthMonitor.currentStatus === 'ONLINE') {
         placeholders.statusString = embedConfigJson?.onlineString ?? '🟢 Online';
-        placeholders.statusColor = embedConfigJson?.onlineColor ?? "#0BA70B";
+        placeholders.statusColor = embedConfigJson?.onlineColor ?? "#7744aa";
     } else if (txAdmin.healthMonitor.currentStatus === 'PARTIAL') {
         placeholders.statusString = embedConfigJson?.partialString ?? '🟡 Partial';
-        placeholders.statusColor = embedConfigJson?.partialColor ?? "#FFF100";
+        placeholders.statusColor = embedConfigJson?.partialColor ?? "#7744aa";
     } else if (txAdmin.healthMonitor.currentStatus === 'OFFLINE') {
         placeholders.statusString = embedConfigJson?.offlineString ?? '🔴 Offline';
-        placeholders.statusColor = embedConfigJson?.offlineColor ?? "#A70B28";
+        placeholders.statusColor = embedConfigJson?.offlineColor ?? "#7744aa";
     }
 
     //Processing embed
@@ -143,57 +131,12 @@ export const generateStatusMessage = (
         embed = new EmbedBuilder(processedEmbedData);
         embed.setColor(placeholders.statusColor as ColorResolvable);
         embed.setTimestamp();
-        embed.setFooter({
-            iconURL: 'https://cdn.discordapp.com/emojis/1062339910654246964.webp?size=96&quality=lossless',
-            text: `txAdmin ${txEnv.txAdminVersion} • Updated every minute`,
-
-        });
     } catch (error) {
         throw new Error(`Embed Class Error: ${(error as Error).message}`);
     }
 
-    //Attempting to instantiate buttons
-    const buttonsRow = new ActionRowBuilder<ButtonBuilder>();
-    try {
-        if (Array.isArray(embedConfigJson?.buttons)) {
-            if (embedConfigJson.buttons.length > 5) {
-                throw new Error(`Over limit of 5 buttons.`);
-            }
-            for (const cfgButton of embedConfigJson.buttons) {
-                if (!isValidButtonConfig(cfgButton)) {
-                    throw new Error('Invalid button in Discord Status Embed Config.');
-                }
-                const processedUrl = processValue(cfgButton.url);
-                if(!isValidEmbedUrl(processedUrl)) {
-                    throw new Error(`Invalid URL \`${processedUrl}\` for button \`${cfgButton.label}\`.
-                    Every URL must start with one of ('http://', 'https://', 'discord://').`);
-                }
-                const btn = new ButtonBuilder({
-                    style: ButtonStyle.Link,
-                    label: processValue(cfgButton.label),
-                    url: processedUrl,
-                });
-                if(cfgButton.emoji !== undefined){
-                    if(!isValidButtonEmoji(cfgButton.emoji)) {
-                        throw new Error(`Invalid emoji for button \`${cfgButton.label}\`.
-                        All emojis must be one of:
-                        - UTF-8 emoji ('😄')
-                        - Valid emoji ID ('1062339910654246964')
-                        - Discord custom emoji (\`<:name:id>\` or \`<a:name:id>\`).
-                        To get the full emoji code, insert it into discord, and add \`\\\` before it then send the message`);
-                    }
-                    btn.setEmoji(cfgButton.emoji);
-                }
-                buttonsRow.addComponents(btn);
-            }
-        }
-    } catch (error) {
-        throw new Error(`Embed Buttons Error: ${(error as Error).message}`);
-    }
-
     return {
         embeds: [embed],
-        components: [buttonsRow],
     };
 }
 

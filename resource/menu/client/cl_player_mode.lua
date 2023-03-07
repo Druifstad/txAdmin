@@ -110,46 +110,6 @@ local function toggleFreecam(enabled)
     end
 end
 
-
-local PTFX_ASSET = 'ent_dst_elec_fire_sp'
-local PTFX_DICT = 'core'
-local LOOP_AMOUNT = 25
-local PTFX_DURATION = 1000
-
--- Applies the particle effect to a ped
-local function createPlayerModePtfxLoop(tgtPedId)
-    CreateThread(function()
-        if tgtPedId <= 0 or tgtPedId == nil then return end
-        RequestNamedPtfxAsset(PTFX_DICT)
-
-        -- Wait until it's done loading.
-        while not HasNamedPtfxAssetLoaded(PTFX_DICT) do
-            Wait(0)
-        end
-
-        local particleTbl = {}
-
-        for i=0, LOOP_AMOUNT do
-            UseParticleFxAssetNextCall(PTFX_DICT)
-            local partiResult = StartParticleFxLoopedOnEntity(PTFX_ASSET, tgtPedId, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, false, false, false)
-            particleTbl[#particleTbl + 1] = partiResult
-            Wait(0)
-        end
-
-        Wait(PTFX_DURATION)
-        for _, parti in ipairs(particleTbl) do
-            StopParticleFxLooped(parti, true)
-        end
-    end)
-end
-
-RegisterNetEvent('txcl:syncPtfxEffect', function(tgtSrc)
-    debugPrint('Syncing particle effect for target netId')
-    local tgtPlayer = GetPlayerFromServerId(tgtSrc)
-    if tgtPlayer == -1 then return end
-    createPlayerModePtfxLoop(GetPlayerPed(tgtPlayer))
-end)
-
 -- Ask server for playermode change and sends nearby playerlist
 local function askChangePlayerMode(mode)
     debugPrint("Requesting player mode change to " .. mode)

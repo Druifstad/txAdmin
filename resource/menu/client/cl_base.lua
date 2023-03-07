@@ -79,7 +79,6 @@ RegisterNetEvent('txcl:setAdmin', function(username, perms, rejectReason)
     RegisterKeyMapping('txAdmin:menu:togglePlayerIDs', 'Menu: Toggle Player IDs', 'KEYBOARD', '')
     RegisterKeyMapping('txAdmin:menu:endSpectate', 'Menu: Exit spectate mode', 'keyboard', 'BACK')
   else
-    print("^3[AUTH] rejected (" .. tostring(rejectReason) ..")")
     menuIsAccessible = false
     menuPermissions = {}
   end
@@ -90,7 +89,6 @@ end)
 --[[ Debug Events / Commands ]]
 -- Command/event to trigger a authentication attempt
 local function retryAuthentication()
-  print("^5[AUTH] Retrying menu authentication.")
   menuIsAccessible = false
   menuPermissions = {}
   sendMenuMessage('resetSession')
@@ -148,7 +146,6 @@ end)
 
 
 RegisterNUICallback('reactLoaded', function(aaa, cb)
-  print("React loaded, sending variables.")
   sendMenuMessage('setDebugMode', isMenuDebug)
   sendMenuMessage('setPermissions', menuPermissions)
   

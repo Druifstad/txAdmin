@@ -8,18 +8,15 @@ ServerCtx = false
 function updateServerCtx()
     _ServerCtx = GlobalState.txAdminServerCtx
     if _ServerCtx == nil then
-        print('^3ServerCtx fallback support activated.')
         TriggerServerEvent('txAdmin:events:getServerCtx')
     else
         ServerCtx = _ServerCtx
-        print('^2ServerCtx updated from global state')
     end
 end
 
 RegisterNetEvent('txAdmin:events:setServerCtx', function(ctx)
     if type(ctx) ~= 'table' then return end
     ServerCtx = ctx
-    print('^2ServerCtx updated from server event.')
     sendMenuMessage('setServerCtx', ServerCtx)
 end)
 

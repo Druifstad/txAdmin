@@ -272,7 +272,6 @@ RegisterNetEvent('txAdmin:events:queueSeatInVehicle', function(vehNetID, seat)
     local tries = 0
     while not NetworkDoesEntityExistWithNetworkId(vehNetID) and tries < 1000 do Wait(0) end
     if tries >= 1000 then
-        print("^1Failed to seat into vehicle (net=" .. vehNetID .. ")")
         return
     end
 
