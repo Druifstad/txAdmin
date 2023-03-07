@@ -197,12 +197,6 @@ export default class FXRunner {
         //Reseting monitor stats
         globals.healthMonitor.resetMonitorStats();
 
-        //Announcing
-        if (announce === 'true' || announce === true) {
-            let discordMessage = globals.translator.t('server_actions.spawning_discord', { servername: globals.config.serverName });
-            globals.discordBot.sendAnnouncement(discordMessage);
-        }
-
         //Starting server
         let pid;
         let historyIndex;
@@ -347,9 +341,6 @@ export default class FXRunner {
                 author: author ?? 'txAdmin',
                 message: globals.translator.t(`server_actions.${messageType}`, tOptions),
             });
-            globals.discordBot.sendAnnouncement(
-                globals.translator.t(`server_actions.${messageType}_discord`, tOptions),
-            );
 
             //Awaiting restart delay
             await sleep(SHUTDOWN_NOTICE_DELAY);

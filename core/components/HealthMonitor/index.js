@@ -245,10 +245,6 @@ export default class HealthMonitor {
             && !this.healthCheckRestartWarningIssued
             && elapsedHealthCheck > (this.hardConfigs.healthCheck.failLimit - 60)
         ) {
-            globals.discordBot.sendAnnouncement(globals.translator.t(
-                'restarter.partial_hang_warn_discord',
-                { servername: globals.config.serverName },
-            ));
             // Dispatch `txAdmin:events:announcement`
             const _cmdOk = globals.fxRunner.sendEvent('announcement', {
                 author: 'txAdmin',

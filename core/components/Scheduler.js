@@ -197,10 +197,6 @@ export default class Scheduler {
                 servername: globals.config.serverName,
             };
 
-            //Send discord warning
-            const discordMsg = globals.translator.t('restarter.schedule_warn_discord', tOptions);
-            globals.discordBot.sendAnnouncement(discordMsg);
-
             //Dispatch `txAdmin:events:scheduledRestart` 
             globals.fxRunner.sendEvent('scheduledRestart', {
                 secondsRemaining: nextDistMins * 60,

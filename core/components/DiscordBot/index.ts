@@ -138,7 +138,7 @@ export default class DiscordBot {
             const serverClients = this.#txAdmin.playerlistManager.onlineCount;
             const serverMaxClients = this.#txAdmin.persistentCache.get('fxsRuntime:maxClients') ?? '??';
             const serverName = this.#txAdmin.globalConfig.serverName;
-            const message = `[${serverClients}/${serverMaxClients}] on ${serverName}`;
+            const message = `${serverClients}/${serverMaxClients} Spelers`;
             this.#client.user.setActivity(message, { type: ActivityType.Watching });
         } catch (error) {
             if (verbose) logWarn(`Failed to set bot activity: ${(error as Error).message}`);
@@ -205,7 +205,7 @@ export default class DiscordBot {
                     const fetchedChannel = this.#client.channels.cache.find((x) => x.id === this.config.announceChannel);
                     if (!fetchedChannel) {
                         return sendError(`Channel ${this.config.announceChannel} not found.`);
-                    } else if (fetchedChannel.type !== ChannelType.GuildText) {
+                    } else if (fetchedChannel.type !== ChannelType.GuildAnnouncement) {
                         return sendError(`Channel ${this.config.announceChannel} - ${(fetchedChannel as any)?.name} is not a text channel.`);
                     } else {
                         this.announceChannel = fetchedChannel;
